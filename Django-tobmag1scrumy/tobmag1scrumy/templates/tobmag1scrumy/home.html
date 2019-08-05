@@ -1,0 +1,180 @@
+<style>
+    .user {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    i {
+        color: blue;
+        font-size: 16px;
+    }
+
+    table {
+        border: 1px solid #333;
+        margin: 0 auto;
+    }
+
+    td {
+        padding: 5px;
+        border: 1px solid #333;
+        margin: 0 auto;
+    }
+
+    .eachgoal {
+        padding-left: 5px;
+        padding-right: 5px;
+        color: #4CAF50;
+    }
+    .eachgoal a {
+        text-decoration: none;
+        color: #4CAF50;
+    }
+    .eachgoal a:hover{
+        opacity: 0.6;
+    }
+    th {
+        background-color: maroon;
+        color: #fff;
+    }
+    .signup {
+        margin-top: 20px;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .signup a {
+        text-decoration: none;
+        padding: 10px 30px;
+        background-color: mediumseagreen;
+        color: white;
+    }
+
+    .logout {
+        margin-top: 20px;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .logout a {
+        text-decoration: none;
+        padding: 10px 30px;
+        background-color: mediumseagreen;
+        color: white;  
+    }
+    .addgoal {
+        margin-top: 20px;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .addgoal a {
+        text-decoration: none;
+        padding: 10px 30px;
+        background-color: mediumseagreen;
+        color: white;  
+        }
+</style>
+
+
+
+
+<title> Homepage </title>
+<h4> Currently Logged in as {{currentuser}} - <span class="group">{{group}}</span></h4>
+
+
+
+
+
+<table>
+    <colgroup span="5"></colgroup>
+    <tr>
+        <th>User</th>
+        <th colspan="1">Weekly Goals</th>
+        <th colspan="1">Daily Goals</th>
+        <th colspan="1">Verify Goals</th>
+        <th colspan="1">Done Goals</th>
+    </tr>
+    {% if user %}
+    {% for user in user %}
+    
+    <tr>
+        <td rowspan="1">
+            <p class="user">{{user}}</p>
+        </td>
+        {% if weeklygoal %}
+        <td rowspan="1">
+            {%for scrumygoal in weeklygoal %}
+            {% if scrumygoal.user == user %}
+            <p class="eachgoal"><a href="{% url 'tobmag1scrumy:movegoal' goal_id=scrumygoal.goal_id %}"> <i>Goal ID:</i> {{scrumygoal.goal_id}} &nbsp; &nbsp; <i>Goal Name:</i> {{scrumygoal.goal_name}}</a></p>
+            {% endif %}
+            {% endfor %}
+        </td>
+        
+        {% else %}
+        <td></td>
+        {% endif %}
+
+        {% if dailygoal %}
+        <td rowspan="1">
+            {% for scrumygoal in dailygoal %}
+            {% if scrumygoal.user == user %}
+            <p class="eachgoal"><a href="{% url 'tobmag1scrumy:movegoal' goal_id=scrumygoal.goal_id %}"> <i>Goal ID:</i> {{scrumygoal.goal_id}} &nbsp; &nbsp; <i>Goal Name:</i> {{scrumygoal.goal_name}}</a></p>
+            {% endif %}
+            {% endfor %}
+
+        </td>
+        {% else %}
+        <td></td>
+        {% endif %}
+
+        {% if verifygoal %}
+        <td rowspan="1">
+            {% for scrumygoal in verifygoal %}
+            {% if scrumygoal.user == user %}
+            <p class="eachgoal"><a href="{% url 'tobmag1scrumy:movegoal' goal_id=scrumygoal.goal_id %}"> <i>Goal ID:</i> {{scrumygoal.goal_id}} &nbsp; &nbsp; <i>Goal Name:</i> {{scrumygoal.goal_name}}</a></p>
+            {% endif %}
+            {% endfor %}
+
+        </td>
+        {% else %}
+        <td></td>
+        {% endif %}
+
+        {% if donegoal %}
+        <td rowspan="1">
+            {% for scrumygoal in donegoal %}
+            {% if scrumygoal.user == user %}
+            <p class="eachgoal"><a href="{% url 'tobmag1scrumy:movegoal' goal_id=scrumygoal.goal_id %}"> <i>Goal ID:</i> {{scrumygoal.goal_id}} &nbsp; &nbsp; <i>Goal Name:</i> {{scrumygoal.goal_name}}</a></p>
+            {% endif %}
+            {% endfor %}
+
+        </td>
+        {% else %}
+        <td></td>
+        {% endif %}
+
+
+
+
+
+
+    </tr>
+    {% endfor %}
+    {% endif %}
+
+</table>
+
+<div class="signup">
+    <a href="{% url 'tobmag1scrumy:index' %}">Sign Up Here!</a>
+
+</div>
+
+<div class="addgoal">
+        <a href="{% url 'tobmag1scrumy:addgoal' %}">Click Here To Add Goal</a>
+    
+</div>
+
+<div class="logout">
+    <a href="{% url 'tobmag1scrumy:logout'%}">Click here to Logout</a>
+
+</div>
